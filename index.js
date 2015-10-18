@@ -1,8 +1,7 @@
 
 'use strict';
 
-let App = require( './src/App.js' ),
-	TransifexApp = require( './src/TransifexApp.js' ),
+let TransifexApp = require( './src/TransifexApp.js' ),
 	config = require( './config.json' ),
 	pullRequestId = 3,
 	app;

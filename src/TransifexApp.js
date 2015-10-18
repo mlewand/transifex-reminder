@@ -15,14 +15,7 @@ class TransifexApp extends App {
 		this.getPrCommits( pullRequestId ).then( function( commits ) {
 			let langFileRegExp = /^lang\/.+.js$/,
 				whitelistedLangFiles = [ 'lang/en.js' ],
-				modifications = {},
-				fileModifications = [].concat.apply( [], commits.map( item => {
-					item.files.srcSha = item.sha;
-					return item.files;
-				} ) ),
-				langModifications = fileModifications.filter( item => {
-					return item.filename && item.filename.match( langFileRegExp ) && whitelistedLangFiles.indexOf( item.filename ) === -1;
-				} );
+				modifications = {};
 
 			// Fill out modifications object in a way, that commit hash is used as a key and contains an array of file modifications
 			// that violates the rule. If commit does not violate it won't be added to object keys.
@@ -35,16 +28,16 @@ class TransifexApp extends App {
 			
 			return {
 				commits: commits,
-				langModifications: langModifications,
 				modifications: modifications
 			};
 		} ).then( ( function( info ) {
-			let langModifications = info.langModifications,
-				modifications = info.modifications,
-				commits = info.commits;
+			let modifications = info.modifications,
+				commits = info.commits,
+				violated = Object.keys( modifications ).length > 0;
+
 			// Now let's put a proper status to the PR, depending if it contains violated files or not.
-			if ( langModifications.length ) {
-				console.log( `PR#${pullRequestId} modifies lang files :(\n\nHere\'s the list: \n* ${langModifications.map( el => el.filename ).join( '\n* ' )}` )
+			if ( violated ) {
+				console.log( `PR#${pullRequestId} modifies lang files :(` );
 				for ( let sha in modifications ) {
 					console.log( `Failed commit: ${sha}` );
 					this._setCommitStatus( sha, 'failure', 'http://ckeditor.com', `Modified lang files (${modifications[ sha ].map( el => el.filename ).join( ', ' )})` );
