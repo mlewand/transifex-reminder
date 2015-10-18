@@ -45,7 +45,6 @@ class TransifexApp extends App {
 			// Now let's put a proper status to the PR, depending if it contains violated files or not.
 			if ( langModifications.length ) {
 				console.log( `PR#${pullRequestId} modifies lang files :(\n\nHere\'s the list: \n* ${langModifications.map( el => el.filename ).join( '\n* ' )}` )
-				// langModifications.forEach( el => this._setCommitStatus( el.sha, 'failure' ) );
 				for ( let sha in modifications ) {
 					console.log( `Failed commit: ${sha}` );
 					this._setCommitStatus( sha, 'failure', 'http://ckeditor.com', `Modified lang files (${modifications[ sha ].map( el => el.filename ).join( ', ' )})` );
@@ -63,8 +62,6 @@ class TransifexApp extends App {
 			throw new Error( `_setCommitStatus(): Invalid state value "${state}"` );
 		}
 		
-		console.log( 'returning' );
-
 		return new Promise( ( function( resolve, reject ) {
 			this.repo.status( sha, {
 				state: state,
@@ -72,7 +69,6 @@ class TransifexApp extends App {
 				description: descr || 'Transifex validation failed',
 				context: 'transifex-reminder'
 			}, function( err, data ) {
-				console.log( 'RES:', err );
 				if ( err ) {
 					return reject( err );
 				}
