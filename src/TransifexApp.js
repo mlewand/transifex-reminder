@@ -24,10 +24,6 @@ class TransifexApp extends App {
 					return item.filename && item.filename.match( langFileRegExp ) && whitelistedLangFiles.indexOf( item.filename ) === -1;
 				} );
 
-			console.log( fileModifications );
-
-			console.log( `Violations count ${langModifications.length}` );
-
 			return {
 				commits: commits,
 				langModifications: langModifications
