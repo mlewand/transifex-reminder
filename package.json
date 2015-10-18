@@ -1,0 +1,14 @@
+{
+  "name": "transifex-reminder",
+  "version": "0.9.0",
+  "description": "Node app that will watch a repository and ensure that PR did not attempt to modify lang files. If so it will kindly remind that translations should be contributed through Transifex.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marek Lewandowski",
+  "license": "MIT",
+  "dependencies": {
+    "octonode": "^0.7.4"
+  }
+}
