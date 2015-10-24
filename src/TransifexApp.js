@@ -41,13 +41,13 @@ class TransifexApp extends App {
 				for ( let sha in modifications ) {
 					let modifiedFileList = modifications[ sha ].map( el => el.filename ).join( ', ' );
 
-					if ( modifiedFileList.length > 120 ) {
+					if ( modifiedFileList.length > 90 ) {
 						// In case if there's just too many changed files in the commit.
-						modifiedFileList = modifiedFileList.substr( 0, 117 ) + '...';
+						modifiedFileList = modifiedFileList.substr( 0, 87 ) + '...';
 					}
 
 					console.log( `Failed commit: ${sha}` );
-					this._setCommitStatus( sha, 'failure', 'http://ckeditor.com', `Modified lang files (${modifications[ sha ].map( el => el.filename ).join( ', ' )})` );
+					this._setCommitStatus( sha, 'failure', 'http://ckeditor.com', `Modified lang files (${modifiedFileList})` );
 				}
 			} else {
 				console.log( commits[ commits.length - 1 ] );
