@@ -1,4 +1,6 @@
 
+'use strict';
+
 var http = require('http'),
 	TransifexApp = require( './src/TransifexApp.js' ),
 	app = new TransifexApp( require( './config.json' ) );
