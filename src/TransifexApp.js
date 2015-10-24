@@ -39,12 +39,20 @@ class TransifexApp extends App {
 			if ( violated ) {
 				console.log( `PR#${pullRequestId} modifies lang files :(` );
 				for ( let sha in modifications ) {
+					let modifiedFileList = modifications[ sha ].map( el => el.filename ).join( ', ' );
+
+					if ( modifiedFileList.length > 120 ) {
+						// In case if there's just too many changed files in the commit.
+						modifiedFileList = modifiedFileList.substr( 0, 117 ) + '...';
+					}
+
 					console.log( `Failed commit: ${sha}` );
 					this._setCommitStatus( sha, 'failure', 'http://ckeditor.com', `Modified lang files (${modifications[ sha ].map( el => el.filename ).join( ', ' )})` );
 				}
 			} else {
 				console.log( commits[ commits.length - 1 ] );
 				console.log( 'PR looking good, great!' );
+				// Adding success status to the last commit.
 				this._setCommitStatus( commits[ commits.length - 1 ].sha, 'success', null, 'No issues detected' );
 			}
 		} ).bind( this ) ).catch( err => console.log( 'getPrCommits(): ERROR:', err ) );
