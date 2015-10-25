@@ -47,7 +47,7 @@ class TransifexApp extends App {
 					}
 
 					console.log( `Failed commit: ${sha}` );
-					this._setCommitStatus( sha, 'failure', 'http://ckeditor.com', `Modified lang files (${modifiedFileList})` );
+					this._setCommitStatus( sha, 'failure', 'http://docs.ckeditor.com/#!/guide/dev_contributing_code-section-changes-that-cannot-be-accepted-as-a-pull-request', `Modified lang files (${modifiedFileList})` );
 				}
 			} else {
 				console.log( commits[ commits.length - 1 ] );
