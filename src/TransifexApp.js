@@ -58,6 +58,19 @@ class TransifexApp extends App {
 		} ).bind( this ) ).catch( err => console.log( 'getPrCommits(): ERROR:', err ) );
 	}
 
+	/**
+	 * Sets a commit status. Status context is fixed to 'transifex-reminder` so multiple calls will overwrite existing status, instead of adding a
+	 * new one.
+	 * 
+	 * Statuses are kept per commit.
+	 *
+	 * @param string sha Commit hash.
+	 * @param string state Status type, might be one of following `success`, `failure`, `error`, `pending`.
+	 * @param string [url] If given status will also provide a link to given URL.
+	 * @param string [descr='Transifex validation failed'] Status label.
+	 * @returns {Promise.<T>}
+	 * @private
+	 */
 	_setCommitStatus( sha, state, url, descr ) {
 		if ( validStates.indexOf( state ) === -1 ) {
 			throw new Error( `_setCommitStatus(): Invalid state value "${state}"` );
