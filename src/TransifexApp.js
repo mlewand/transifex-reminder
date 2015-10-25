@@ -47,13 +47,13 @@ class TransifexApp extends App {
 					}
 
 					console.log( `Failed commit: ${sha}` );
-					this._setCommitStatus( sha, 'failure', 'http://docs.ckeditor.com/#!/guide/dev_contributing_code-section-changes-that-cannot-be-accepted-as-a-pull-request', `Modified lang files (${modifiedFileList})` );
+					this._setCommitStatus( sha, 'failure', `Modified lang files (${modifiedFileList})`, 'http://docs.ckeditor.com/#!/guide/dev_contributing_code-section-changes-that-cannot-be-accepted-as-a-pull-request' );
 				}
 			} else {
 				console.log( commits[ commits.length - 1 ] );
 				console.log( 'PR looking good, great!' );
 				// Adding success status to the last commit.
-				this._setCommitStatus( commits[ commits.length - 1 ].sha, 'success', null, 'No issues detected' );
+				this._setCommitStatus( commits[ commits.length - 1 ].sha, 'success', 'No issues detected' );
 			}
 		} ).bind( this ) ).catch( err => console.log( 'getPrCommits(): ERROR:', err ) );
 	}
@@ -66,12 +66,12 @@ class TransifexApp extends App {
 	 *
 	 * @param string sha Commit hash.
 	 * @param string state Status type, might be one of following `success`, `failure`, `error`, `pending`.
-	 * @param string [url] If given status will also provide a link to given URL.
 	 * @param string [descr='Transifex validation failed'] Status label.
+	 * @param string [url] If given status will also provide a link to given URL.
 	 * @returns {Promise.<T>}
 	 * @private
 	 */
-	_setCommitStatus( sha, state, url, descr ) {
+	_setCommitStatus( sha, state, descr, url ) {
 		if ( validStates.indexOf( state ) === -1 ) {
 			throw new Error( `_setCommitStatus(): Invalid state value "${state}"` );
 		}
