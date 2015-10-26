@@ -3,8 +3,18 @@
 
 var http = require('http'),
 	TransifexApp = require( './src/TransifexApp.js' ),
-	app = new TransifexApp( require( './config.json' ) );
-const PORT = 20388;
+	config = require( './config.json' ),
+	app = new TransifexApp( config ),
+	program = require( 'commander' );
+
+const DEFAULT_PORT = 20388;
+
+program
+	.version( '0.9.0' )
+	.option( '-p, --port [number]', `Server port (defaults to ${DEFAULT_PORT})`, parseInt )
+	.parse( process.argv );
+
+const PORT = program.port || Number( config.port ) || DEFAULT_PORT;
 
 function handleRequest( request, response ){
 	response.end( 'Got request' );

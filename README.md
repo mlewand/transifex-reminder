@@ -24,3 +24,7 @@ A simple NodeJS app to check if incoming pull requests modifies language files. 
 	1. Apply proper settings:
 		![GitHub settings](http://i.imgur.com/KAUZjEd.png)
 	1. Click "Add webhook" button.
+
+### Custom Port
+
+You might customize port either by `port` property in `config.json` or by passing `-p <portNumber>` argument to CLI.

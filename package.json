@@ -9,6 +9,7 @@
   "author": "Marek Lewandowski",
   "license": "MIT",
   "dependencies": {
+    "commander": "^2.9.0",
     "octonode": "^0.7.4"
   }
 }
